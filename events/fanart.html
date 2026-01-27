@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fanart Competition | Inquicon</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f8f0ff;
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 4px, rgba(0,0,0,0.02) 4px, rgba(0,0,0,0.02) 8px),
+                repeating-linear-gradient(90deg, transparent, transparent 4px, rgba(0,0,0,0.02) 4px, rgba(0,0,0,0.02) 8px);
+            min-height: 100vh;
+            padding: 30px 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 25% 30%, rgba(221, 160, 221, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 75% 70%, rgba(186, 85, 211, 0.15) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Back button */
+        .back-button {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 12px 25px;
+            background: linear-gradient(180deg, #c77ddb 0%, #ba55d3 100%);
+            color: #fff;
+            text-decoration: none;
+            border: 5px solid #8b4789;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 1rem;
+            box-shadow: 
+                inset -2px -2px 0 rgba(0,0,0,0.15),
+                inset 2px 2px 0 rgba(255,255,255,0.3),
+                0 5px 0 rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 
+                inset -2px -2px 0 rgba(0,0,0,0.15),
+                inset 2px 2px 0 rgba(255,255,255,0.3),
+                0 8px 0 rgba(0,0,0,0.1);
+        }
+
+        .back-button:active {
+            transform: translateY(-1px);
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 30px;
+            background: linear-gradient(135deg, #da77f2 0%, #e8b4f8 50%, #f0d4ff 100%);
+            border: 6px solid #8b4789;
+            border-radius: 20px;
+            position: relative;
+            box-shadow: 
+                inset -4px -4px 0 rgba(0,0,0,0.1),
+                inset 4px 4px 0 rgba(255,255,255,0.4),
+                0 10px 0 rgba(0,0,0,0.1);
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            height: 45%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.3), transparent);
+            border-radius: 12px 12px 0 0;
+            pointer-events: none;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #fff;
+            font-weight: bold;
+            text-shadow: 
+                3px 3px 0 #6a3d6a,
+                -2px -2px 0 rgba(255,255,255,0.3);
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .event-type {
+            color: #4a2a4a;
+            font-size: 1.1rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
+        }
+
+        /* Content sections */
+        .section {
+            background: linear-gradient(180deg, #ffffff 0%, #faf5ff 100%);
+            border: 6px solid #c77ddb;
+            border-radius: 20px;
+            padding: 35px 30px;
+            margin-bottom: 30px;
+            box-shadow: 
+                inset -3px -3px 0 rgba(0,0,0,0.1),
+                inset 3px 3px 0 rgba(255,255,255,0.5),
+                0 8px 0 rgba(0,0,0,0.08);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: #8b4789;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-shadow: 2px 2px 0 rgba(255,255,255,0.5);
+            border-bottom: 4px solid #c77ddb;
+            padding-bottom: 10px;
+        }
+
+        .section-content {
+            color: #4a3a4a;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+        }
+
+        .section-content ul {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+
+        .section-content li {
+            margin-bottom: 10px;
+        }
+
+        .section-content strong {
+            color: #8b4789;
+        }
+
+        /* Info boxes */
+        .info-box {
+            background: rgba(221, 160, 221, 0.2);
+            border: 4px solid #da77f2;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .info-box-title {
+            font-size: 1.3rem;
+            color: #8b4789;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        /* Highlight box */
+        .highlight-box {
+            background: linear-gradient(135deg, #ffe4f7 0%, #ffd4f4 100%);
+            border: 5px solid #da77f2;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .highlight-title {
+            font-size: 1.8rem;
+            color: #8b4789;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .highlight-content {
+            color: #4a3a4a;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        /* Instagram section */
+        .instagram-section {
+            background: linear-gradient(135deg, #c13584 0%, #e1306c 50%, #fd1d1d 100%);
+            border: 6px solid #8b2e5c;
+            border-radius: 20px;
+            padding: 35px 30px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: 
+                inset -3px -3px 0 rgba(0,0,0,0.2),
+                inset 3px 3px 0 rgba(255,255,255,0.3),
+                0 8px 0 rgba(0,0,0,0.1);
+        }
+
+        .instagram-title {
+            font-size: 2.2rem;
+            color: #fff;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 0 rgba(0,0,0,0.3);
+        }
+
+        .instagram-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .instagram-handle {
+            font-size: 1.8rem;
+            color: #fff;
+            font-weight: bold;
+            background: rgba(0,0,0,0.3);
+            padding: 15px 30px;
+            border-radius: 15px;
+            display: inline-block;
+            margin: 15px 0;
+            border: 3px solid rgba(255,255,255,0.4);
+        }
+
+        .instagram-instruction {
+            color: #fff;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-top: 20px;
+        }
+
+        /* Prize box */
+        .prize-box {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            border: 5px solid #daa520;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 25px 0;
+            text-align: center;
+            box-shadow: 
+                inset -3px -3px 0 rgba(0,0,0,0.1),
+                inset 3px 3px 0 rgba(255,255,255,0.4),
+                0 8px 0 rgba(0,0,0,0.1);
+        }
+
+        .prize-title {
+            font-size: 2rem;
+            color: #b8860b;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 0 rgba(255,255,255,0.5);
+        }
+
+        .prize-amount {
+            font-size: 3rem;
+            color: #8b4789;
+            font-weight: bold;
+            text-shadow: 
+                3px 3px 0 #b8860b,
+                -1px -1px 0 rgba(255,255,255,0.3);
+        }
+
+        .prize-note {
+            margin-top: 15px;
+            color: #5a4a2a;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        /* Requirements checklist */
+        .checklist {
+            background: linear-gradient(135deg, #f0d4ff 0%, #f8e8ff 100%);
+            border: 5px solid #c77ddb;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .checklist-title {
+            font-size: 1.6rem;
+            color: #8b4789;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .checklist-item {
+            background: #fff;
+            border: 3px solid #da77f2;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .checklist-icon {
+            font-size: 1.8rem;
+            flex-shrink: 0;
+        }
+
+        .checklist-text {
+            color: #4a3a4a;
+            font-size: 1.05rem;
+            font-weight: 500;
+        }
+
+        /* Floating decorations */
+        .float-deco {
+            position: fixed;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.4;
+            animation: float-gentle 6s ease-in-out infinite;
+            font-size: 2rem;
+        }
+
+        @keyframes float-gentle {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.4; }
+            50% { transform: translateY(-15px) rotate(10deg); opacity: 0.7; }
+        }
+
+        .deco-1 { top: 10%; left: 5%; animation-delay: 0s; }
+        .deco-2 { top: 20%; right: 8%; animation-delay: 2s; }
+        .deco-3 { bottom: 15%; left: 10%; animation-delay: 4s; }
+        .deco-4 { bottom: 25%; right: 5%; animation-delay: 6s; }
+        /* Register Button Section */
+        .register-section {
+            background: linear-gradient(180deg, #ffe4e1 0%, #ffd1d1 100%);
+            border: 6px solid #ff6b6b;
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 40px;
+            text-align: center;
+            box-shadow: 
+                inset -3px -3px 0 rgba(0,0,0,0.1),
+                inset 3px 3px 0 rgba(255,255,255,0.5),
+                0 8px 0 rgba(0,0,0,0.08);
+        }
+
+        .register-section h2 {
+            font-size: 2rem;
+            color: #d65a3a;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 0 rgba(255,255,255,0.5);
+        }
+
+        .register-section p {
+            color: #8b4513;
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+        }
+
+        .register-button {
+            display: inline-block;
+            padding: 18px 45px;
+            background: linear-gradient(180deg, #ff69b4 0%, #ff1493 100%);
+            color: #fff;
+            text-decoration: none;
+            border: 5px solid #c71585;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 1.3rem;
+            box-shadow: 
+                inset -3px -3px 0 rgba(0,0,0,0.2),
+                inset 3px 3px 0 rgba(255,255,255,0.3),
+                0 8px 0 rgba(0,0,0,0.15);
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .register-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                inset -3px -3px 0 rgba(0,0,0,0.2),
+                inset 3px 3px 0 rgba(255,255,255,0.3),
+                0 12px 0 rgba(0,0,0,0.15);
+        }
+
+        .register-button:active {
+            transform: translateY(-2px);
+        }
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+            }
+
+            .float-deco {
+                display: none;
+            }
+
+            .instagram-handle {
+                font-size: 1.4rem;
+                padding: 12px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating decorations -->
+    <div class="float-deco deco-1">🎨</div>
+    <div class="float-deco deco-2">✏️</div>
+    <div class="float-deco deco-3">🖌️</div>
+    <div class="float-deco deco-4">💜</div>
+
+    <div class="container">
+        <!-- Back Button -->
+        <a href="../index.html" class="back-button">← Back to Events</a>
+
+        <!-- Header -->
+        <header>
+            <h1>FANART COMPETITION</h1>
+            <p class="event-type">Show Your Love for Rena-san!</p>
+        </header>
+
+        <!-- About Section -->
+        <section class="section">
+            <h2 class="section-title">🎨 About the Competition</h2>
+            <div class="section-content">
+                <p>
+                    Calling all artists! Show your love and creativity by creating stunning fanart of our beloved mascot, <strong>Rena-san</strong>!
+                </p>
+                <p>
+                    Whether you prefer digital painting, traditional sketching, watercolors, or any other medium, we want to see your unique interpretation 
+                    of Rena-san. From cute and wholesome to dramatic and epic—let your artistic vision shine!
+                </p>
+            </div>
+        </section>
+
+        <!-- Rena-san Spotlight -->
+        <div class="highlight-box">
+            <div class="highlight-title">✨ Meet Your Muse: Rena-san ✨</div>
+            <div class="highlight-content">
+                Our wonderful VRoid-designed mascot who embodies the spirit of Inquicon!<br>
+                Check out the main Inquicon page to see Rena-san and get inspired!
+            </div>
+        </div>
+
+        <!-- Requirements -->
+        <section class="section">
+            <h2 class="section-title">📋 Competition Requirements</h2>
+            <div class="section-content">
+                <div class="checklist">
+                    <div class="checklist-title">✅ Your Submission Must:</div>
+                    
+                    <div class="checklist-item">
+                        <div class="checklist-icon">👧</div>
+                        <div class="checklist-text"><strong>Feature Rena-san</strong> - She must be the main focus of your artwork</div>
+                    </div>
+
+                    <div class="checklist-item">
+                        <div class="checklist-icon">🎨</div>
+                        <div class="checklist-text"><strong>Be original artwork</strong> - Created by you, not traced or heavily referenced</div>
+                    </div>
+
+                    <div class="checklist-item">
+                        <div class="checklist-icon">✏️</div>
+                        <div class="checklist-text"><strong>All art forms allowed</strong> - Digital, traditional, mixed media—whatever you prefer!</div>
+                    </div>
+
+                    <div class="checklist-item">
+                        <div class="checklist-icon">🚫</div>
+                        <div class="checklist-text"><strong>NO AI art allowed</strong> - This is a competition for human artists only</div>
+                    </div>
+
+                    <div class="checklist-item">
+                        <div class="checklist-icon">📱</div>
+                        <div class="checklist-text"><strong>Post on Instagram</strong> - Share your art with proper tags (see below)</div>
+                    </div>
+                </div>
+
+                <div class="info-box" style="margin-top: 25px;">
+                    <div class="info-box-title">⚠️ Important Note on AI Art</div>
+                    <p style="margin-bottom: 0;">
+                        AI-generated or AI-assisted artwork is <strong>NOT allowed</strong> in this competition. 
+                        We want to celebrate human creativity and artistic skill. Any submissions found to use AI will be disqualified.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- How to Submit (Instagram) -->
+        <div class="instagram-section">
+            <div class="instagram-title">📱 How to Submit</div>
+            <div class="instagram-icon">📸</div>
+            
+            <div class="instagram-instruction">
+                <p style="margin-bottom: 20px;"><strong>Post your artwork on Instagram and tag us!</strong></p>
+                
+                <div class="instagram-handle">@inquicon</div>
+                
+                <p style="margin-top: 25px; font-size: 1rem;">
+                    <strong>Required hashtags:</strong><br>
+                    #InquiconFanart #RenaSan #Inquicon
+                </p>
+                
+                <p style="margin-top: 20px; font-size: 1rem;">
+                    Make sure your post is <strong>public</strong> so we can see it!<br>
+                    Include a caption telling us about your artwork and inspiration.
+                </p>
+            </div>
+        </div>
+
+        <!-- Rules Section -->
+        <section class="section">
+            <h2 class="section-title">📜 Rules & Guidelines</h2>
+            <div class="section-content">
+                <ul>
+                    <li><strong>Original Work Only:</strong> Your artwork must be your own original creation. No tracing, heavy referencing, or plagiarism.</li>
+                    <li><strong>Appropriate Content:</strong> Keep it SFW (Safe For Work). No NSFW, excessive violence, or inappropriate content.</li>
+                    <li><strong>One Entry Per Person:</strong> Submit only one artwork. Choose your best work!</li>
+                    <li><strong>Any Medium:</strong> Digital art, traditional art, watercolor, pencil, markers—all are welcome!</li>
+                    <li><strong>High Quality Image:</strong> Post a clear, high-resolution image of your artwork.</li>
+                    <li><strong>No Filters:</strong> Don't use heavy filters that obscure the original artwork.</li>
+                    <li><strong>Rights:</strong> You retain full rights to your artwork. Inquicon may feature winning entries on social media with proper credit.</li>
+                    <li><strong>Follow Instructions:</strong> Must post on Instagram with proper tags and mention.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Prize Section -->
+        <div class="prize-box">
+            <div class="prize-title">🏆 Prizes</div>
+            <div class="prize-amount">₹1,500</div>
+            <div class="prize-note">Top 3 Artists Win ₹500 Each!</div>
+        </div>
+
+        <!-- Judging Criteria -->
+        <section class="section">
+            <h2 class="section-title">⭐ Judging Criteria</h2>
+            <div class="section-content">
+                <p>Your artwork will be judged based on:</p>
+                <ul>
+                    <li><strong>Creativity & Originality:</strong> Unique interpretation and creative approach</li>
+                    <li><strong>Technical Skill:</strong> Execution, technique, and artistic proficiency</li>
+                    <li><strong>Composition:</strong> Overall layout, balance, and visual appeal</li>
+                    <li><strong>Character Representation:</strong> How well Rena-san is portrayed</li>
+                    <li><strong>Overall Impact:</strong> Does it capture attention and evoke emotion?</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Tips Section -->
+        <section class="section">
+            <h2 class="section-title">💡 Artist Tips</h2>
+            <div class="section-content">
+                <ul>
+                    <li><strong>Get Inspired:</strong> Check out Rena-san on the main Inquicon page and social media!</li>
+                    <li><strong>Make It Yours:</strong> Add your personal artistic style while keeping Rena-san recognizable.</li>
+                    <li><strong>Consider the Background:</strong> A well-thought-out background can elevate your piece.</li>
+                    <li><strong>Show Personality:</strong> Capture Rena-san's character and charm in your artwork.</li>
+                    <li><strong>Quality Over Speed:</strong> Take your time to create your best work.</li>
+                    <li><strong>Sign Your Work:</strong> Include your artist signature or watermark!</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Questions Section -->
+        <section class="section">
+            <h2 class="section-title">📧 Questions?</h2>
+            <div class="section-content">
+                <p>
+                    If you have any questions about the competition or submission process, reach out to us on Instagram at <strong>@inquicon_official</strong> 
+                    or through Inquicon's official social media channels!
+                </p>
+            </div>
+        </section>
+
+        <!-- Register Section -->
+        <section class="register-section">
+            <h2>🎯 Ready to Participate? 🎯</h2>
+            <p>Don't miss out on this amazing event! Register now to secure your spot.</p>
+            <a href="https://www.inquivesta.in/events/registration/inquicon" class="register-button" target="_blank">Register Here</a>
+        </section>
+    </div>
+</body>
+</html>

@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon PVP Tournament | Inquicon</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f0fff0;
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 4px, rgba(0,0,0,0.02) 4px, rgba(0,0,0,0.02) 8px),
+                repeating-linear-gradient(90deg, transparent, transparent 4px, rgba(0,0,0,0.02) 4px, rgba(0,0,0,0.02) 8px);
+            min-height: 100vh;
+            padding: 30px 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 25% 30%, rgba(144, 238, 144, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 75% 70%, rgba(152, 251, 152, 0.15) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Back button */
+        .back-button {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 12px 25px;
+            background: linear-gradient(180deg, #76c776 0%, #5cb85c 100%);
+            color: #fff;
+            text-decoration: none;
+            border: 5px solid #3d8b3d;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 1rem;
+            box-shadow: 
+                inset -2px -2px 0 rgba(0,0,0,0.15),
+                inset 2px 2px 0 rgba(255,255,255,0.3),
+                0 5px 0 rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 
+                inset -2px -2px 0 rgba(0,0,0,0.15),
+                inset 2px 2px 0 rgba(255,255,255,0.3),
+                0 8px 0 rgba(0,0,0,0.1);
+        }
+
+        .back-button:active {
+            transform: translateY(-1px);
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 30px;
+            background: linear-gradient(135deg, #76c776 0%, #90ee90 50%, #b4f4b4 100%);
+            border: 6px solid #3d8b3d;
+            border-radius: 20px;
+            position: relative;
+            box-shadow: 
+                inset -4px -4px 0 rgba(0,0,0,0.1),
+                inset 4px 4px 0 rgba(255,255,255,0.4),
+                0 10px 0 rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            height: 45%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.3), transparent);
+            border-radius: 12px 12px 0 0;
+            pointer-events: none;
+        }
+
+        .header-content {
+            flex: 1;
+            position: relative;
+            z-index: 2;
+        }
+
+        .rena-header {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 120px;
+            height: 120px;
+            background: rgba(255,255,255,0.3);
+            border: 4px solid #3d8b3d;
+            border-radius: 15px;
+            padding: 5px;
+            box-shadow: 
+                inset -2px -2px 0 rgba(0,0,0,0.1),
+                inset 2px 2px 0 rgba(255,255,255,0.3);
+            z-index: 3;
+        }
+
+        .rena-header img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .rena-header-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            background: rgba(255,255,255,0.5);
+            border-radius: 10px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #fff;
+            font-weight: bold;
+            text-shadow: 
+                3px 3px 0 #2d6a2d,
+                -2px -2px 0 rgba(255,255,255,0.3);
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .event-type {
+            color: #2a4a2a;
+            font-size: 1.1rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
+        }
+
+        /* Content sections */
+        .section {
+            background: linear-gradient(180deg, #ffffff 0%, #f5fff5 100%);
+            border: 6px solid #76c776;
+            border-radius: 20px;
+            padding: 35px 30px;
+            margin-bottom: 30px;
+            box-shadow: 
+                inset -3px -3px 0 rgba(0,0,0,0.1),
+                inset 3px 3px 0 rgba(255,255,255,0.5),
+                0 8px 0 rgba(0,0,0,0.08);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: #3d8b3d;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-shadow: 2px 2px 0 rgba(255,255,255,0.5);
+            border-bottom: 4px solid #76c776;
+            padding-bottom: 10px;
+        }
+
+        .section-content {
+            color: #2a3a2a;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+        }
+
+        .section-content ul {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+
+        .section-content li {
+            margin-bottom: 10px;
+        }
+
+        .section-content strong {
+            color: #3d8b3d;
+        }
+
+        /* Info boxes */
+        .info-box {
+            background: rgba(144, 238, 144, 0.2);
+            border: 4px solid #76c776;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .info-box-title {
+            font-size: 1.3rem;
+            color: #3d8b3d;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        /* Warning box */
+        .warning-box {
+            background: linear-gradient(135deg, #ffebe6 0%, #ffd4cc 100%);
+            border: 5px solid #ff6b6b;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .warning-title {
+            font-size: 1.5rem;
+            color: #c92a2a;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .warning-content {
+            color: #5a3a3a;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        /* Tournament format */
+        .format-box {
+            background: linear-gradient(135deg, #d4f4d4 0%, #e8ffe8 100%);
+            border: 5px solid #76c776;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .format-title {
+            font-size: 1.6rem;
+            color: #3d8b3d;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .format-step {
+            background: #fff;
+            border: 3px solid #90ee90;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+        }
+
+        .format-step-number {
+            font-size: 1.5rem;
+            color: #3d8b3d;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .format-step-text {
+            color: #2a3a2a;
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        /* Rules checklist */
+        .rules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .rule-card {
+            background: #fff;
+            border: 4px solid #76c776;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 
+                inset -2px -2px 0 rgba(0,0,0,0.05),
+                inset 2px 2px 0 rgba(255,255,255,0.5),
+                0 5px 0 rgba(0,0,0,0.05);
+        }
+
+        .rule-icon {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .rule-title {
+            font-size: 1.2rem;
+            color: #3d8b3d;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .rule-content {
+            color: #2a3a2a;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        /* Prize box */
+        .prize-box {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            border: 5px solid #daa520;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 25px 0;
+            text-align: center;
+            box-shadow: 
+                inset -3px -3px 0 rgba(0,0,0,0.1),
+                inset 3px 3px 0 rgba(255,255,255,0.4),
+                0 8px 0 rgba(0,0,0,0.1);
+        }
+
+        .prize-title {
+            font-size: 2rem;
+            color: #b8860b;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 0 rgba(255,255,255,0.5);
+        }
+
+        .prize-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .prize-item {
+            background: rgba(255,255,255,0.7);
+            border: 4px solid #daa520;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .prize-place-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .prize-place-name {
+            font-size: 1.3rem;
+            color: #3d8b3d;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .prize-value {
+            font-size: 1.6rem;
+            color: #b8860b;
+            font-weight: bold;
+        }
+
+        /* Banned list */
+        .banned-section {
+            background: linear-gradient(135deg, #ffe6e6 0%, #ffd4d4 100%);
+            border: 5px solid #e74c3c;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .banned-title {
+            font-size: 1.6rem;
+            color: #c0392b;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .banned-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .banned-item {
+            background: rgba(255,255,255,0.8);
+            border: 3px solid #e74c3c;
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            font-weight: bold;
+            color: #c0392b;
+        }
+
+        .allowed-item {
+            background: rgba(144, 238, 144, 0.3);
+            border: 3px solid #76c776;
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            font-weight: bold;
+            color: #3d8b3d;
+        }
+
+        /* Floating decorations */
+        .float-deco {
+            position: fixed;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.4;
+            animation: float-gentle 6s ease-in-out infinite;
+            font-size: 2rem;
+        }
+
+        @keyframes float-gentle {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.4; }
+            50% { transform: translateY(-15px) rotate(10deg); opacity: 0.7; }
+        }
+
+        .deco-1 { top: 10%; left: 5%; animation-delay: 0s; }
+        .deco-2 { top: 20%; right: 8%; animation-delay: 2s; }
+        .deco-3 { bottom: 15%; left: 10%; animation-delay: 4s; }
+        .deco-4 { bottom: 25%; right: 5%; animation-delay: 6s; }
+        /* Register Button Section */
+        .register-section {
+            background: linear-gradient(180deg, #ffe4e1 0%, #ffd1d1 100%);
+            border: 6px solid #ff6b6b;
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 40px;
+            text-align: center;
+            box-shadow: 
+                inset -3px -3px 0 rgba(0,0,0,0.1),
+                inset 3px 3px 0 rgba(255,255,255,0.5),
+                0 8px 0 rgba(0,0,0,0.08);
+        }
+
+        .register-section h2 {
+            font-size: 2rem;
+            color: #d65a3a;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 0 rgba(255,255,255,0.5);
+        }
+
+        .register-section p {
+            color: #8b4513;
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+        }
+
+        .register-button {
+            display: inline-block;
+            padding: 18px 45px;
+            background: linear-gradient(180deg, #ff69b4 0%, #ff1493 100%);
+            color: #fff;
+            text-decoration: none;
+            border: 5px solid #c71585;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 1.3rem;
+            box-shadow: 
+                inset -3px -3px 0 rgba(0,0,0,0.2),
+                inset 3px 3px 0 rgba(255,255,255,0.3),
+                0 8px 0 rgba(0,0,0,0.15);
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .register-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                inset -3px -3px 0 rgba(0,0,0,0.2),
+                inset 3px 3px 0 rgba(255,255,255,0.3),
+                0 12px 0 rgba(0,0,0,0.15);
+        }
+
+        .register-button:active {
+            transform: translateY(-2px);
+        }
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+            }
+
+            .rules-grid,
+            .prize-breakdown,
+            .banned-list {
+                grid-template-columns: 1fr;
+            }
+
+            .float-deco {
+                display: none;
+            }
+
+            .rena-header {
+                position: relative;
+                right: auto;
+                top: auto;
+                transform: none;
+                margin: 20px auto 0;
+                width: 100px;
+                height: 100px;
+            }
+
+            header {
+                flex-direction: column;
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating decorations -->
+    <div class="float-deco deco-1">⚔️</div>
+    <div class="float-deco deco-2">🎮</div>
+    <div class="float-deco deco-3">⚡</div>
+    <div class="float-deco deco-4">🏆</div>
+
+    <div class="container">
+        <!-- Back Button -->
+        <a href="../index.html" class="back-button">← Back to Events</a>
+
+        <!-- Header -->
+        <header>
+            <div class="header-content">
+                <h1>POKEMON PVP</h1>
+                <p class="event-type">Showdown Tournament</p>
+            </div>
+            
+            <!-- Rena-san in header -->
+            <div class="rena-header">
+                <img src="../images/pokemon-rena.png" alt="Rena-san" id="renaHeaderImg" style="display: none;">
+                <div class="rena-header-placeholder" id="renaHeaderPlaceholder">👧</div>
+            </div>
+        </header>
+
+        <!-- About Section -->
+        <section class="section">
+            <h2 class="section-title">⚔️ Tournament Overview</h2>
+            <div class="section-content">
+                <p>
+                    Battle for glory in Inquicon's <strong>Pokemon PVP Tournament</strong>! 
+                    Compete on <strong>Pokemon Showdown</strong> in intense 6v6 battles to prove you're the ultimate Pokemon trainer!
+                </p>
+                <p>
+                    Build your perfect team, strategize your moves, and battle your way through the tournament bracket. 
+                    Will you claim the championship, or will you be voted as the MVP by the crowd?
+                </p>
+            </div>
+        </section>
+
+        <!-- Critical Warning -->
+        <div class="warning-box">
+            <div class="warning-title">
+                ⚠️ CRITICAL REQUIREMENT - READ CAREFULLY!
+            </div>
+            <div class="warning-content">
+                <p><strong>You MUST come prepared with:</strong></p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Your <strong>Pokemon Showdown account</strong> already created</li>
+                    <li>Your <strong>battle team already built and ready</strong></li>
+                </ul>
+                <p style="margin-top: 15px; margin-bottom: 0;"><strong style="color: #c92a2a;">If you arrive without an account or team, you will be DISQUALIFIED!</strong></p>
+            </div>
+        </div>
+
+        <!-- Tournament Format -->
+        <div class="format-box">
+            <div class="format-title">📊 Tournament Format</div>
+            
+            <div class="format-step">
+                <div class="format-step-number">Round 1: Initial Battles</div>
+                <div class="format-step-text">
+                    All <strong>N registered participants</strong> battle against each other. Winners advance, creating <strong>N/2 winners</strong>.
+                </div>
+            </div>
+
+            <div class="format-step">
+                <div class="format-step-number">Round 2: Second Chance Selection</div>
+                <div class="format-step-text">
+                    <strong>Random losers</strong> from Round 1 are selected and added to the N/2 winners to make the total a <strong>power of 2</strong> 
+                    (e.g., 8, 16, 32, 64 participants).
+                </div>
+            </div>
+
+            <div class="format-step">
+                <div class="format-step-number">Bracket Stage: Elimination Rounds</div>
+                <div class="format-step-text">
+                    Standard <strong>single-elimination bracket</strong> continues until we have our <strong>Winner and Runner-up</strong>.
+                </div>
+            </div>
+
+            <div class="format-step">
+                <div class="format-step-number">MVP Selection</div>
+                <div class="format-step-text">
+                    The <strong>audience votes</strong> for the Most Valuable Player (MVP) based on skill, strategy, and performance throughout the tournament!
+                </div>
+            </div>
+        </div>
+
+        <!-- Battle Format -->
+        <section class="section">
+            <h2 class="section-title">🎮 Battle Format</h2>
+            <div class="section-content">
+                <div class="info-box">
+                    <div class="info-box-title">Battle Type</div>
+                    <p style="font-size: 1.3rem; font-weight: bold; color: #3d8b3d; margin-bottom: 0;">6v6 Single Battle</p>
+                </div>
+                <p>
+                    All battles are standard <strong>6 vs 6 single battles</strong>. Bring your best team of 6 Pokemon and battle one-on-one!
+                </p>
+            </div>
+        </section>
+
+        <!-- Rules Section -->
+        <section class="section">
+            <h2 class="section-title">📜 Tournament Rules</h2>
+            <div class="section-content">
+                <div class="rules-grid">
+                    <div class="rule-card">
+                        <div class="rule-icon">🎮</div>
+                        <div class="rule-title">Platform</div>
+                        <div class="rule-content">All battles on Pokemon Showdown website</div>
+                    </div>
+
+                    <div class="rule-card">
+                        <div class="rule-icon">👤</div>
+                        <div class="rule-title">Account Required</div>
+                        <div class="rule-content">Must have Showdown account ready before tournament</div>
+                    </div>
+
+                    <div class="rule-card">
+                        <div class="rule-icon">⚔️</div>
+                        <div class="rule-title">Team Ready</div>
+                        <div class="rule-content">Come with your 6 Pokemon team already built</div>
+                    </div>
+
+                    <div class="rule-card">
+                        <div class="rule-icon">🚫</div>
+                        <div class="rule-title">No Team Changes</div>
+                        <div class="rule-content">Cannot change team mid-tournament or you're disqualified</div>
+                    </div>
+
+                    <div class="rule-card">
+                        <div class="rule-icon">⚡</div>
+                        <div class="rule-title">6v6 Format</div>
+                        <div class="rule-content">All battles are 6 vs 6 single battles</div>
+                    </div>
+
+                    <div class="rule-card">
+                        <div class="rule-icon">⏱️</div>
+                        <div class="rule-title">Be Punctual</div>
+                        <div class="rule-content">Arrive on time for your scheduled matches</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- What's Banned -->
+        <div class="banned-section">
+            <div class="banned-title">🚫 Banned / Restricted</div>
+            
+            <div class="banned-list">
+                <div class="banned-item">❌ Legendary Pokemon</div>
+                <div class="banned-item">❌ Ultra Beasts</div>
+                <div class="banned-item">❌ One-Hit KO Moves</div>
+                <div class="banned-item">❌ Mega Evolution</div>
+                <div class="banned-item">❌ Dynamax</div>
+            </div>
+
+            <div style="text-align: center; margin-top: 20px; font-size: 1.2rem; color: #2a3a2a;">
+                <strong>What IS Allowed:</strong>
+            </div>
+            
+            <div class="banned-list" style="margin-top: 15px;">
+                <div class="allowed-item">✅ Terastallize</div>
+                <div class="allowed-item">✅ Regular Pokemon</div>
+                <div class="allowed-item">✅ Standard Moves</div>
+            </div>
+        </div>
+
+        <!-- Prize Section -->
+        <div class="prize-box">
+            <div class="prize-title">🏆 Prize Pool</div>
+            
+            <div class="prize-breakdown">
+                <div class="prize-item">
+                    <div class="prize-place-icon">🥇</div>
+                    <div class="prize-place-name">Winner</div>
+                    <div class="prize-value">₹2,000</div>
+                </div>
+
+                <div class="prize-item">
+                    <div class="prize-place-icon">🥈</div>
+                    <div class="prize-place-name">Runner-up</div>
+                    <div class="prize-value">₹1,500</div>
+                </div>
+
+                <div class="prize-item">
+                    <div class="prize-place-icon">⭐</div>
+                    <div class="prize-place-name">MVP</div>
+                    <div class="prize-value">₹1,000</div>
+                </div>
+            </div>
+
+            <p style="margin-top: 25px; color: #5a4a2a; font-size: 1.05rem;">
+                <strong>Total Prize Pool: ₹4,500</strong>
+            </p>
+        </div>
+
+        <!-- Preparation Guide -->
+        <section class="section">
+            <h2 class="section-title">🎯 How to Prepare</h2>
+            <div class="section-content">
+                <h3 style="color: #3d8b3d; margin-bottom: 15px;">Step 1: Create Your Pokemon Showdown Account</h3>
+                <ul>
+                    <li>Go to <strong>play.pokemonshowdown.com</strong></li>
+                    <li>Click "Choose Name" and register an account</li>
+                    <li>Verify your email if required</li>
+                </ul>
+
+                <h3 style="color: #3d8b3d; margin: 25px 0 15px;">Step 2: Build Your Team</h3>
+                <ul>
+                    <li>Click on "Teambuilder" in Pokemon Showdown</li>
+                    <li>Select "Gen 9 OU" or appropriate format</li>
+                    <li>Build a team of 6 Pokemon following the tournament rules</li>
+                    <li>Remember: NO Legendaries, Ultra Beasts, Mega Evolution, Dynamax, or OHKO moves!</li>
+                    <li>Test your team in practice battles</li>
+                </ul>
+
+                <h3 style="color: #3d8b3d; margin: 25px 0 15px;">Step 3: Practice & Strategize</h3>
+                <ul>
+                    <li>Practice battles on Showdown to refine your strategy</li>
+                    <li>Learn type matchups and move interactions</li>
+                    <li>Prepare for different team compositions</li>
+                    <li>Don't forget - Terastallize is allowed!</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Important Reminders -->
+        <section class="section">
+            <h2 class="section-title">⚠️ Important Reminders</h2>
+            <div class="section-content">
+                <div class="info-box">
+                    <div class="info-box-title">🚨 Disqualification Conditions</div>
+                    <ul style="margin-left: 20px;">
+                        <li>Arriving without a Pokemon Showdown account</li>
+                        <li>Arriving without a pre-built team</li>
+                        <li>Changing your team mid-tournament</li>
+                        <li>Using banned Pokemon or moves</li>
+                        <li>Unsportsmanlike conduct</li>
+                    </ul>
+                </div>
+
+                <div class="info-box" style="margin-top: 20px;">
+                    <div class="info-box-title">💡 Pro Tips</div>
+                    <ul style="margin-left: 20px;">
+                        <li>Balance your team with different types</li>
+                        <li>Consider both offensive and defensive Pokemon</li>
+                        <li>Have a strategy for Terastallize usage</li>
+                        <li>Practice speed control and prediction</li>
+                        <li>Watch competitive Pokemon content for inspiration!</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Questions Section -->
+        <section class="section">
+            <h2 class="section-title">📧 Questions?</h2>
+            <div class="section-content">
+                <p>
+                    If you have any questions about the tournament rules, team building, or Pokemon Showdown, 
+                    reach out through Inquicon's official social media channels!
+                </p>
+                <p style="margin-bottom: 0;">
+                    <strong>Good luck, trainers! May the best team win! ⚔️</strong>
+                </p>
+            </div>
+        </section>
+        <!-- Register Section -->
+        <section class="register-section">
+            <h2>🎯 Ready to Participate? 🎯</h2>
+            <p>Don't miss out on this amazing event! Register now to secure your spot.</p>
+            <a href="https://www.inquivesta.in/events/registration/inquicon" class="register-button" target="_blank">Register Here</a>
+        </section>
+    </div>
+
+    <script>
+        // Rena header image loading
+        const renaHeaderImg = document.getElementById('renaHeaderImg');
+        const renaHeaderPlaceholder = document.getElementById('renaHeaderPlaceholder');
+        
+        if (renaHeaderImg && renaHeaderPlaceholder) {
+            renaHeaderImg.onload = function() {
+                renaHeaderImg.style.display = 'block';
+                renaHeaderPlaceholder.style.display = 'none';
+            };
+            
+            renaHeaderImg.onerror = function() {
+                renaHeaderImg.style.display = 'none';
+                renaHeaderPlaceholder.style.display = 'flex';
+            };
+        }
+    </script>
+</body>
+</html>

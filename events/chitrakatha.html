@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chitrakatha - Manga Making Competition | Inquicon</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #fff5f0;
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 4px, rgba(0,0,0,0.02) 4px, rgba(0,0,0,0.02) 8px),
+                repeating-linear-gradient(90deg, transparent, transparent 4px, rgba(0,0,0,0.02) 4px, rgba(0,0,0,0.02) 8px);
+            min-height: 100vh;
+            padding: 30px 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 25% 30%, rgba(255, 160, 122, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 70%, rgba(255, 182, 193, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Back button */
+        .back-button {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 12px 25px;
+            background: linear-gradient(180deg, #ff9a76 0%, #ff7f50 100%);
+            color: #fff;
+            text-decoration: none;
+            border: 5px solid #d65a3a;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 1rem;
+            box-shadow: 
+                inset -2px -2px 0 rgba(0,0,0,0.15),
+                inset 2px 2px 0 rgba(255,255,255,0.3),
+                0 5px 0 rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 
+                inset -2px -2px 0 rgba(0,0,0,0.15),
+                inset 2px 2px 0 rgba(255,255,255,0.3),
+                0 8px 0 rgba(0,0,0,0.1);
+        }
+
+        .back-button:active {
+            transform: translateY(-1px);
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 30px;
+            background: linear-gradient(135deg, #ff9a76 0%, #ffa07a 50%, #ffb6a6 100%);
+            border: 6px solid #d65a3a;
+            border-radius: 20px;
+            position: relative;
+            box-shadow: 
+                inset -4px -4px 0 rgba(0,0,0,0.1),
+                inset 4px 4px 0 rgba(255,255,255,0.4),
+                0 10px 0 rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            height: 45%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.3), transparent);
+            border-radius: 12px 12px 0 0;
+            pointer-events: none;
+        }
+
+        .header-content {
+            flex: 1;
+            position: relative;
+            z-index: 2;
+        }
+
+        .rena-header {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 120px;
+            height: 120px;
+            background: rgba(255,255,255,0.3);
+            border: 4px solid #d65a3a;
+            border-radius: 15px;
+            padding: 5px;
+            box-shadow: 
+                inset -2px -2px 0 rgba(0,0,0,0.1),
+                inset 2px 2px 0 rgba(255,255,255,0.3);
+            z-index: 3;
+        }
+
+        .rena-header img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .rena-header-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            background: rgba(255,255,255,0.5);
+            border-radius: 10px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #fff;
+            font-weight: bold;
+            text-shadow: 
+                3px 3px 0 #b8442a,
+                -2px -2px 0 rgba(255,255,255,0.3);
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .event-type {
+            color: #4a3a2a;
+            font-size: 1.1rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
+        }
+
+        /* Content sections */
+        .section {
+            background: linear-gradient(180deg, #ffffff 0%, #fff8f5 100%);
+            border: 6px solid #d98a6d;
+            border-radius: 20px;
+            padding: 35px 30px;
+            margin-bottom: 30px;
+            box-shadow: 
+                inset -3px -3px 0 rgba(0,0,0,0.1),
+                inset 3px 3px 0 rgba(255,255,255,0.5),
+                0 8px 0 rgba(0,0,0,0.08);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: #ff6347;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-shadow: 2px 2px 0 rgba(255,255,255,0.5);
+            border-bottom: 4px solid #ff9a76;
+            padding-bottom: 10px;
+        }
+
+        .section-content {
+            color: #5a4a3a;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+        }
+
+        .section-content ul {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+
+        .section-content li {
+            margin-bottom: 10px;
+        }
+
+        .section-content strong {
+            color: #ff6347;
+        }
+
+        /* Info boxes */
+        .info-box {
+            background: rgba(255, 160, 122, 0.15);
+            border: 4px solid #ff9a76;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .info-box-title {
+            font-size: 1.3rem;
+            color: #d65a3a;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        /* Dates box */
+        .dates-box {
+            background: linear-gradient(135deg, #ffe4d9 0%, #ffd4c4 100%);
+            border: 5px solid #ff9a76;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .date-item {
+            margin: 15px 0;
+            font-size: 1.15rem;
+            color: #4a3a2a;
+            font-weight: bold;
+        }
+
+        .date-label {
+            color: #ff6347;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Prize box */
+        .prize-box {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            border: 5px solid #daa520;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 25px 0;
+            text-align: center;
+            box-shadow: 
+                inset -3px -3px 0 rgba(0,0,0,0.1),
+                inset 3px 3px 0 rgba(255,255,255,0.4),
+                0 8px 0 rgba(0,0,0,0.1);
+        }
+
+        .prize-title {
+            font-size: 2rem;
+            color: #b8860b;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 0 rgba(255,255,255,0.5);
+        }
+
+        .prize-amount {
+            font-size: 3rem;
+            color: #ff6347;
+            font-weight: bold;
+            text-shadow: 
+                3px 3px 0 #b8860b,
+                -1px -1px 0 rgba(255,255,255,0.3);
+        }
+
+        .prize-note {
+            margin-top: 15px;
+            color: #5a4a2a;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        /* QR Code section */
+        .qr-section {
+            background: linear-gradient(180deg, #ffffff 0%, #f0f8ff 100%);
+            border: 6px solid #87ceeb;
+            border-radius: 20px;
+            padding: 35px 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 
+                inset -3px -3px 0 rgba(0,0,0,0.1),
+                inset 3px 3px 0 rgba(255,255,255,0.5),
+                0 8px 0 rgba(0,0,0,0.08);
+        }
+
+        .qr-title {
+            font-size: 2rem;
+            color: #4682b4;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .qr-container {
+            width: 250px;
+            height: 250px;
+            margin: 0 auto 20px;
+            background: #fff;
+            border: 5px solid #5dade2;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 
+                inset -2px -2px 0 rgba(0,0,0,0.1),
+                inset 2px 2px 0 rgba(255,255,255,0.5),
+                0 6px 0 rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qr-placeholder {
+            font-size: 6rem;
+            color: #87ceeb;
+        }
+
+        .qr-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: none;
+        }
+
+        .qr-instruction {
+            color: #4a3a3a;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        /* Categories section */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .category-card {
+            background: linear-gradient(135deg, #ffe4d9 0%, #ffd4c4 100%);
+            border: 4px solid #ff9a76;
+            border-radius: 15px;
+            padding: 25px 20px;
+            text-align: center;
+            box-shadow: 
+                inset -2px -2px 0 rgba(0,0,0,0.1),
+                inset 2px 2px 0 rgba(255,255,255,0.3),
+                0 5px 0 rgba(0,0,0,0.08);
+        }
+
+        .category-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .category-name {
+            font-size: 1.5rem;
+            color: #ff6347;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .category-desc {
+            color: #5a4a3a;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Floating decorations */
+        .float-deco {
+            position: fixed;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.4;
+            animation: float-gentle 6s ease-in-out infinite;
+            font-size: 2rem;
+        }
+
+        @keyframes float-gentle {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.4; }
+            50% { transform: translateY(-15px) rotate(10deg); opacity: 0.7; }
+        }
+
+        .deco-1 { top: 10%; left: 5%; animation-delay: 0s; }
+        .deco-2 { top: 20%; right: 8%; animation-delay: 2s; }
+        .deco-3 { bottom: 15%; left: 10%; animation-delay: 4s; }
+        .deco-4 { bottom: 25%; right: 5%; animation-delay: 6s; }
+
+        /* Register Button Section */
+        .register-section {
+            background: linear-gradient(180deg, #ffe4e1 0%, #ffd1d1 100%);
+            border: 6px solid #ff6b6b;
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 40px;
+            text-align: center;
+            box-shadow: 
+                inset -3px -3px 0 rgba(0,0,0,0.1),
+                inset 3px 3px 0 rgba(255,255,255,0.5),
+                0 8px 0 rgba(0,0,0,0.08);
+        }
+
+        .register-section h2 {
+            font-size: 2rem;
+            color: #d65a3a;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 0 rgba(255,255,255,0.5);
+        }
+
+        .register-section p {
+            color: #8b4513;
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+        }
+
+        .register-button {
+            display: inline-block;
+            padding: 18px 45px;
+            background: linear-gradient(180deg, #ff69b4 0%, #ff1493 100%);
+            color: #fff;
+            text-decoration: none;
+            border: 5px solid #c71585;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 1.3rem;
+            box-shadow: 
+                inset -3px -3px 0 rgba(0,0,0,0.2),
+                inset 3px 3px 0 rgba(255,255,255,0.3),
+                0 8px 0 rgba(0,0,0,0.15);
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .register-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                inset -3px -3px 0 rgba(0,0,0,0.2),
+                inset 3px 3px 0 rgba(255,255,255,0.3),
+                0 12px 0 rgba(0,0,0,0.15);
+        }
+
+        .register-button:active {
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+            }
+
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .float-deco {
+                display: none;
+            }
+
+            .rena-header {
+                position: relative;
+                right: auto;
+                top: auto;
+                transform: none;
+                margin: 20px auto 0;
+                width: 100px;
+                height: 100px;
+            }
+
+            header {
+                flex-direction: column;
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating decorations -->
+    <div class="float-deco deco-1">📖</div>
+    <div class="float-deco deco-2">✏️</div>
+    <div class="float-deco deco-3">🎨</div>
+    <div class="float-deco deco-4">📚</div>
+
+    <div class="container">
+        <!-- Back Button -->
+        <a href="../index.html" class="back-button">← Back to Events</a>
+
+        <!-- Header -->
+        <header>
+            <div class="header-content">
+                <h1>CHITRAKATHA</h1>
+                <p class="event-type">Manga Making Competition</p>
+            </div>
+            
+            <!-- Rena-san in header -->
+            <div class="rena-header">
+                <img src="../images/chitrakatha-rena.png" alt="Rena-san" id="renaHeaderImg" style="display: none;">
+                <div class="rena-header-placeholder" id="renaHeaderPlaceholder">👧</div>
+            </div>
+        </header>
+
+        <!-- About Section -->
+        <section class="section">
+            <h2 class="section-title">📖 About the Competition</h2>
+            <div class="section-content">
+                <p>
+                    Unleash your creativity and storytelling skills in <strong>Chitrakatha</strong>, Inquicon's premier manga-making competition! 
+                    Whether you're an experienced mangaka or just starting your journey, this is your chance to showcase your unique vision.
+                </p>
+                <p>
+                    Create an original manga that captures the essence of your story, with art and narrative that resonate with readers. 
+                    We welcome all styles and genres—from action-packed adventures to heartwarming slice-of-life tales!
+                </p>
+            </div>
+        </section>
+
+        <!-- Important Dates -->
+        <div class="dates-box">
+            <div class="date-item">
+                <span class="date-label">Submissions Open:</span><br>
+                January 2, 2026
+            </div>
+            <div class="date-item">
+                <span class="date-label">Submission Deadline:</span><br>
+                February 1, 2026
+            </div>
+        </div>
+
+        <!-- Requirements Section -->
+        <section class="section">
+            <h2 class="section-title">📋 Submission Requirements</h2>
+            <div class="section-content">
+                <div class="info-box">
+                    <div class="info-box-title">Minimum Panel Count</div>
+                    <p><strong>At least 25 panels OR 1 complete chapter</strong></p>
+                    <p style="margin-bottom: 0;">If your chapter is less than 25 panels, you must submit a complete chapter that tells a cohesive story.</p>
+                </div>
+
+                <p><strong>Your submission must include:</strong></p>
+                <ul>
+                    <li>Original story and concept</li>
+                    <li>Clear panel layout and flow</li>
+                    <li>Readable text/dialogue (if applicable)</li>
+                    <li>A title for your manga</li>
+                    <li>Brief synopsis (50-100 words)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Categories Section -->
+        <section class="section">
+            <h2 class="section-title">🏆 Judging Categories</h2>
+            <div class="section-content">
+                <p>Two winners will be selected based on excellence in these categories:</p>
+
+                <div class="categories-grid">
+                    <div class="category-card">
+                        <div class="category-icon">🎨</div>
+                        <div class="category-name">Best Art</div>
+                        <div class="category-desc">
+                            Judged on artistic skill, character design, panel composition, and visual storytelling. 
+                            AI-generated art is NOT eligible for this category.
+                        </div>
+                    </div>
+
+                    <div class="category-card">
+                        <div class="category-icon">📚</div>
+                        <div class="category-name">Best Plot</div>
+                        <div class="category-desc">
+                            Judged on story originality, character development, pacing, and overall narrative impact. 
+                            Open to all submissions, including those using AI art.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-box" style="margin-top: 25px;">
+                    <div class="info-box-title">⚠️ AI Art Policy</div>
+                    <p>
+                        <strong>AI-generated art IS allowed</strong>, but submissions using AI art will <strong>ONLY</strong> be considered for the <strong>Best Plot</strong> category.
+                    </p>
+                    <p style="margin-bottom: 0;">
+                        This ensures that artists who draw by hand can compete fairly for Best Art, while writers who focus on storytelling can still participate using AI tools.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Prize Section -->
+        <div class="prize-box">
+            <div class="prize-title">🎁 Prize Pool</div>
+            <div class="prize-amount">₹2,000</div>
+            <div class="prize-note">₹1,000 for Best Art Winner</div>
+            <div class="prize-note">₹1,000 for Best Plot Winner</div>
+        </div>
+
+        <!-- QR Code Section -->
+        <section class="qr-section">
+            <h2 class="qr-title">📱 Submit Your Entry</h2>
+            <p class="qr-instruction">Scan the QR code to access the submission form</p>
+            
+            <div class="qr-container">
+                <!-- Replace with actual QR code image -->
+                <img src="../images/chitrakatha-qr.png" alt="Submission Form QR Code" class="qr-image" id="qrImage">
+                <div class="qr-placeholder" id="qrPlaceholder">📱</div>
+            </div>
+
+            <p style="color: #4a3a3a; margin-top: 15px;">
+                Or visit the submission form directly at the link provided in the QR code
+            </p>
+        </section>
+
+        <!-- Rules Section -->
+        <section class="section">
+            <h2 class="section-title">📜 Rules & Guidelines</h2>
+            <div class="section-content">
+                <ul>
+                    <li><strong>Original Work Only:</strong> Your manga must be your own original creation. No plagiarism or tracing.</li>
+                    <li><strong>Format:</strong> Submit in PDF, PNG, or JPG format. Make sure panels are in the correct reading order.</li>
+                    <li><strong>Language:</strong> Manga can be in any language, but please provide an English translation/summary if not in English.</li>
+                    <li><strong>Content:</strong> Keep it appropriate! No excessive violence, NSFW content, or hate speech.</li>
+                    <li><strong>AI Art Declaration:</strong> You must clearly state if AI was used in your submission.</li>
+                    <li><strong>One Entry Per Person:</strong> You may only submit one manga for the competition.</li>
+                    <li><strong>Rights:</strong> You retain rights to your work, but Inquicon may showcase winning entries on social media with credit.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="section">
+            <h2 class="section-title">📧 Questions?</h2>
+            <div class="section-content">
+                <p>
+                    If you have any questions about the competition, submission process, or rules, feel free to reach out to the Inquicon team!
+                </p>
+                <p style="margin-bottom: 0;">
+                    <strong>Contact us through our official Inquicon social media channels.</strong>
+                </p>
+            </div>
+        </section>
+
+        <!-- Register Section -->
+        <section class="register-section">
+            <h2>🎯 Ready to Participate? 🎯</h2>
+            <p>Don't miss out on this amazing event! Register now to secure your spot.</p>
+            <a href="https://www.inquivesta.in/events/registration/inquicon" class="register-button" target="_blank">Register Here</a>
+        </section>
+    </div>
+
+    <script>
+        // QR code image loading
+        const qrImage = document.getElementById('qrImage');
+        const qrPlaceholder = document.getElementById('qrPlaceholder');
+        
+        if (qrImage && qrPlaceholder) {
+            qrImage.onload = function() {
+                qrImage.style.display = 'block';
+                qrPlaceholder.style.display = 'none';
+            };
+            
+            qrImage.onerror = function() {
+                qrImage.style.display = 'none';
+                qrPlaceholder.style.display = 'flex';
+            };
+        }
+
+        // Rena header image loading
+        const renaHeaderImg = document.getElementById('renaHeaderImg');
+        const renaHeaderPlaceholder = document.getElementById('renaHeaderPlaceholder');
+        
+        if (renaHeaderImg && renaHeaderPlaceholder) {
+            renaHeaderImg.onload = function() {
+                renaHeaderImg.style.display = 'block';
+                renaHeaderPlaceholder.style.display = 'none';
+            };
+            
+            renaHeaderImg.onerror = function() {
+                renaHeaderImg.style.display = 'none';
+                renaHeaderPlaceholder.style.display = 'flex';
+            };
+        }
+    </script>
+</body>
+</html>
