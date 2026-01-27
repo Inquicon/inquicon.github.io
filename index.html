@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inquicon - Anime Convention at IISER Kolkata</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #fef5e7;
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 4px, rgba(0,0,0,0.02) 4px, rgba(0,0,0,0.02) 8px),
+                repeating-linear-gradient(90deg, transparent, transparent 4px, rgba(0,0,0,0.02) 4px, rgba(0,0,0,0.02) 8px);
+            min-height: 100vh;
+            padding: 30px 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Soft background glow */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 25% 30%, rgba(255, 182, 193, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 75% 70%, rgba(173, 216, 230, 0.15) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Main header */
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 40px 30px;
+            background: linear-gradient(135deg, #ffb6c1 0%, #ffc8dd 50%, #c8b6ff 100%);
+            border: 6px solid #8b7b9b;
+            border-radius: 20px;
+            position: relative;
+            box-shadow: 
+                inset -4px -4px 0 rgba(0,0,0,0.1),
+                inset 4px 4px 0 rgba(255,255,255,0.4),
+                0 10px 0 rgba(0,0,0,0.1);
+            animation: header-glow 3s ease-in-out infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+        }
+
+        @keyframes header-glow {
+            0%, 100% { box-shadow: 
+                inset -4px -4px 0 rgba(0,0,0,0.1),
+                inset 4px 4px 0 rgba(255,255,255,0.4),
+                0 10px 0 rgba(0,0,0,0.1); }
+            50% { box-shadow: 
+                inset -4px -4px 0 rgba(0,0,0,0.1),
+                inset 4px 4px 0 rgba(255,255,255,0.4),
+                0 10px 0 rgba(0,0,0,0.1),
+                0 0 20px rgba(255,182,193,0.3); }
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            height: 45%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.3), transparent);
+            border-radius: 12px 12px 0 0;
+            pointer-events: none;
+        }
+
+        .logo-container {
+            max-width: 600px;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: drop-shadow(3px 3px 5px rgba(0,0,0,0.2));
+            animation: title-pulse 2s ease-in-out infinite;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            color: #fff;
+            font-weight: bold;
+            text-shadow: 
+                4px 4px 0 #8b4789,
+                -2px -2px 0 rgba(255,255,255,0.3);
+            letter-spacing: 4px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            animation: title-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes title-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .subtitle {
+            color: #5a4a6a;
+            font-size: 1.2rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
+        }
+
+        /* Intro section */
+        .intro-section {
+            background: linear-gradient(180deg, #ffffff 0%, #f8f0ff 100%);
+            border: 6px solid #9b8ba8;
+            border-radius: 20px;
+            padding: 35px 40px;
+            margin-bottom: 50px;
+            box-shadow: 
+                inset -3px -3px 0 rgba(0,0,0,0.1),
+                inset 3px 3px 0 rgba(255,255,255,0.5),
+                0 8px 0 rgba(0,0,0,0.08);
+            position: relative;
+        }
+
+        .intro-section::before {
+            content: '🌸';
+            position: absolute;
+            top: -28px;
+            right: 30px;
+            font-size: 3rem;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+        }
+
+        .intro-title {
+            font-size: 2rem;
+            color: #8b4789;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+            text-shadow: 2px 2px 0 rgba(255,255,255,0.5);
+        }
+
+        .intro-text {
+            color: #5a4a6a;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .mascot-intro {
+            text-align: center;
+            margin-top: 25px;
+            padding: 25px;
+            background: rgba(255, 182, 193, 0.2);
+            border-radius: 15px;
+            border: 3px solid #ffb6c1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .mascot-intro h3 {
+            color: #d1477e;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            animation: text-bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes text-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .mascot-intro p {
+            color: #8b4789;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* Rena-san image container */
+        .rena-container {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, #ffd1dc 0%, #ffb6c1 100%);
+            border: 5px solid #ff69b4;
+            border-radius: 20px;
+            padding: 10px;
+            box-shadow: 
+                inset -3px -3px 0 rgba(0,0,0,0.15),
+                inset 3px 3px 0 rgba(255,255,255,0.4),
+                0 6px 0 rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: rena-float 3s ease-in-out infinite;
+        }
+
+        @keyframes rena-float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-8px) rotate(-2deg); }
+            75% { transform: translateY(-8px) rotate(2deg); }
+        }
+
+        .rena-container::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            right: 8px;
+            height: 40%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.5), transparent);
+            border-radius: 12px 12px 0 0;
+            pointer-events: none;
+        }
+
+        .rena-container::after {
+            content: '🌸';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 2.5rem;
+            animation: sparkle-spin 4s ease-in-out infinite;
+            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.15));
+        }
+
+        @keyframes sparkle-spin {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg); }
+        }
+
+        @keyframes sparkle-spin {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        .rena-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+            image-rendering: pixelated;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
+        }
+
+        .rena-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            background: rgba(255,255,255,0.5);
+            border-radius: 12px;
+            animation: placeholder-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes placeholder-pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        /* Events section title */
+        .section-title {
+            font-size: 2.5rem;
+            color: #8b4789;
+            text-align: center;
+            margin: 50px 0 30px;
+            font-weight: bold;
+            text-shadow: 3px 3px 0 rgba(255,255,255,0.5);
+        }
+
+        /* Events grid */
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 35px;
+            padding: 20px;
+            margin-bottom: 50px;
+        }
+
+        /* Event cards */
+        .event-card {
+            background: linear-gradient(180deg, #ffffff 0%, #fff5f8 100%);
+            border: 6px solid;
+            border-radius: 20px;
+            padding: 30px 25px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            text-decoration: none;
+            display: block;
+            box-shadow: 
+                inset -3px -3px 0 rgba(0,0,0,0.1),
+                inset 3px 3px 0 rgba(255,255,255,0.5),
+                0 8px 0 rgba(0,0,0,0.1);
+        }
+
+        /* Event type colors */
+        .event-card.music { border-color: #ff6b9d; }
+        .event-card.art { border-color: #ffa07a; }
+        .event-card.tech { border-color: #87ceeb; }
+        .event-card.fanart { border-color: #dda0dd; }
+        .event-card.gaming { border-color: #98fb98; }
+        .event-card.cosplay { border-color: #ffb6c1; }
+
+        .event-card::before {
+            content: '▶';
+            position: absolute;
+            left: -25px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: currentColor;
+            opacity: 0;
+            transition: all 0.2s ease;
+        }
+
+        .event-card:hover::before {
+            left: 10px;
+            opacity: 1;
+        }
+
+        .event-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 
+                inset -3px -3px 0 rgba(0,0,0,0.1),
+                inset 3px 3px 0 rgba(255,255,255,0.5),
+                0 12px 0 rgba(0,0,0,0.1);
+        }
+
+        .event-icon {
+            font-size: 3.5rem;
+            text-align: center;
+            margin-bottom: 18px;
+            filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.15));
+            animation: icon-bob 2.5s ease-in-out infinite;
+        }
+
+        @keyframes icon-bob {
+            0%, 100% { transform: translateY(0) scale(1); }
+            25% { transform: translateY(-10px) scale(1.05); }
+            75% { transform: translateY(-5px) scale(0.98); }
+        }
+
+        .event-card:hover .event-icon {
+            animation: icon-wiggle 0.5s ease-in-out;
+        }
+
+        @keyframes icon-wiggle {
+            0%, 100% { transform: translateX(0) rotate(0deg); }
+            25% { transform: translateX(-5px) rotate(-5deg); }
+            75% { transform: translateX(5px) rotate(5deg); }
+        }
+
+        .event-title {
+            font-size: 1.6rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 15px;
+            color: currentColor;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 0 rgba(255,255,255,0.5);
+        }
+
+        .event-card.music .event-title { color: #ff6b9d; }
+        .event-card.art .event-title { color: #ff8c69; }
+        .event-card.tech .event-title { color: #5dade2; }
+        .event-card.fanart .event-title { color: #c77ddb; }
+        .event-card.gaming .event-title { color: #76c776; }
+        .event-card.cosplay .event-title { color: #ff9ab4; }
+
+        .event-description {
+            color: #5a4a6a;
+            text-align: center;
+            line-height: 1.7;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        .event-link {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: currentColor;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            box-shadow: 
+                inset -2px -2px 0 rgba(0,0,0,0.2),
+                inset 2px 2px 0 rgba(255,255,255,0.3);
+        }
+
+        .event-link:hover {
+            transform: scale(1.05);
+            box-shadow: 
+                inset -2px -2px 0 rgba(0,0,0,0.2),
+                inset 2px 2px 0 rgba(255,255,255,0.3),
+                0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        /* Registration section */
+        .registration-section {
+            background: linear-gradient(180deg, #ffffff 0%, #fff8dc 100%);
+            border: 6px solid #daa520;
+            border-radius: 20px;
+            padding: 40px 35px;
+            margin-bottom: 50px;
+            box-shadow: 
+                inset -3px -3px 0 rgba(0,0,0,0.1),
+                inset 3px 3px 0 rgba(255,255,255,0.5),
+                0 8px 0 rgba(0,0,0,0.1);
+        }
+
+        .registration-title {
+            font-size: 2rem;
+            color: #d4a017;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: bold;
+            text-shadow: 2px 2px 0 rgba(255,255,255,0.5);
+        }
+
+        .pricing-table {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            border: 5px solid #8b7355;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 
+                inset -2px -2px 0 rgba(0,0,0,0.1),
+                inset 2px 2px 0 rgba(255,255,255,0.5);
+        }
+
+        .pricing-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .pricing-table th {
+            background: linear-gradient(180deg, #f4a460 0%, #d2691e 100%);
+            color: #fff;
+            padding: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+            border-bottom: 3px solid #8b4513;
+        }
+
+        .pricing-table td {
+            padding: 15px;
+            text-align: center;
+            font-size: 1.1rem;
+            color: #5a4a3a;
+            font-weight: bold;
+            border-bottom: 2px solid #d2b48c;
+        }
+
+        .pricing-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .pricing-table tr:nth-child(even) {
+            background: #faf0e6;
+        }
+
+        .tba {
+            color: #ff6347;
+            font-style: italic;
+            font-weight: bold;
+        }
+
+        .price {
+            color: #2ecc71;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Judges Section */
+        .judges-section {
+            background: linear-gradient(180deg, #f0e6ff 0%, #e6d9f5 100%);
+            border: 6px solid #9b8ba8;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 50px;
+            box-shadow: 
+                inset -3px -3px 0 rgba(0,0,0,0.1),
+                inset 3px 3px 0 rgba(255,255,255,0.5),
+                0 8px 0 rgba(0,0,0,0.08);
+            position: relative;
+        }
+
+        .judges-section::before {
+            content: '⭐';
+            position: absolute;
+            top: -30px;
+            right: 30px;
+            font-size: 3rem;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+        }
+
+        .judges-title {
+            font-size: 2.5rem;
+            color: #8b4789;
+            text-align: center;
+            margin-bottom: 35px;
+            text-shadow: 2px 2px 0 rgba(255,255,255,0.5);
+            font-weight: bold;
+        }
+
+        .judges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .judge-card {
+            background: linear-gradient(180deg, #ffffff 0%, #fef5ff 100%);
+            border: 5px solid #b8a8c8;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 
+                inset -2px -2px 0 rgba(0,0,0,0.08),
+                inset 2px 2px 0 rgba(255,255,255,0.5),
+                0 6px 0 rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .judge-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .judge-image-container {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid #d1c4e9;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            background: linear-gradient(135deg, #e6d9f5 0%, #d1c4e9 100%);
+        }
+
+        .judge-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .judge-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+        }
+
+        .judge-name {
+            font-size: 1.4rem;
+            color: #8b4789;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .judge-title-text {
+            font-size: 1rem;
+            color: #6a5a7a;
+            font-style: italic;
+        }
+
+        /* Register Button */
+        .register-button-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .register-button {
+            display: inline-block;
+            padding: 18px 45px;
+            background: linear-gradient(180deg, #ff69b4 0%, #ff1493 100%);
+            color: #fff;
+            text-decoration: none;
+            border: 5px solid #c71585;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 1.3rem;
+            box-shadow: 
+                inset -3px -3px 0 rgba(0,0,0,0.2),
+                inset 3px 3px 0 rgba(255,255,255,0.3),
+                0 8px 0 rgba(0,0,0,0.15);
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .register-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                inset -3px -3px 0 rgba(0,0,0,0.2),
+                inset 3px 3px 0 rgba(255,255,255,0.3),
+                0 12px 0 rgba(0,0,0,0.15);
+        }
+
+        .register-button:active {
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            background: linear-gradient(180deg, #e8d5ff 0%, #d5c5e8 100%);
+            border: 5px solid #9b8ba8;
+            border-radius: 20px;
+            margin-top: 50px;
+            box-shadow: 
+                inset -3px -3px 0 rgba(0,0,0,0.1),
+                inset 3px 3px 0 rgba(255,255,255,0.5);
+        }
+
+        footer p {
+            color: #5a4a6a;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .intro-section,
+            .registration-section {
+                padding: 25px 20px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Sakura flower decorations (static) */
+        .sparkle-deco {
+            position: fixed;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.6;
+            animation: float-sparkle 8s ease-in-out infinite;
+            font-size: 2.5rem;
+        }
+
+        @keyframes float-sparkle {
+            0%, 100% { 
+                transform: translateY(0) rotate(0deg); 
+                opacity: 0.5; 
+            }
+            50% { 
+                transform: translateY(-20px) rotate(15deg); 
+                opacity: 0.9; 
+            }
+        }
+
+        .sparkle-1 { top: 10%; left: 5%; animation-delay: 0s; font-size: 2rem; }
+        .sparkle-2 { top: 20%; right: 8%; animation-delay: 2s; font-size: 1.8rem; }
+        .sparkle-3 { bottom: 15%; left: 10%; animation-delay: 4s; font-size: 2.8rem; }
+        .sparkle-4 { bottom: 25%; right: 5%; animation-delay: 6s; font-size: 2.2rem; }
+
+        /* Blinking flowers */
+        @keyframes star-blink {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.15); }
+        }
+
+        .star-blink {
+            animation: star-blink 2s ease-in-out infinite;
+        }
+
+        /* Pixel shimmer on cards */
+        @keyframes pixel-shimmer {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating sakura flower decorations (static) -->
+    <div class="sparkle-deco sparkle-1">🌸</div>
+    <div class="sparkle-deco sparkle-2 star-blink">🌸</div>
+    <div class="sparkle-deco sparkle-3">🌸</div>
+    <div class="sparkle-deco sparkle-4 star-blink">🌸</div>
+
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo-container">
+                <!-- Replace with your Inquicon logo image -->
+                <img src="images/inquicon-logo.png" alt="Inquicon Logo" class="logo-image">
+                <!-- 
+                    To add your logo:
+                    1. Create an 'images' folder in the same directory as this HTML file
+                    2. Put your logo image in the images folder
+                    3. Name it 'inquicon-logo.png' or update the filename above
+                -->
+            </div>
+        </header>
+
+        <!-- Introduction Section -->
+        <section class="intro-section">
+            <h2 class="intro-title">Welcome to Inquicon!</h2>
+            <p class="intro-text">
+                Inquicon is the anime convention brought to you by Inquivesta, the annual fest of IISER Kolkata. 
+                Where passion meets creativity, and anime culture comes alive!
+            </p>
+            <p class="intro-text">
+                Join us for an unforgettable celebration of anime, manga, gaming, and cosplay. 
+                From epic performances to creative competitions, Inquicon has something for every otaku!
+            </p>
+            
+            <div class="mascot-intro">
+                <h3>Meet Rena-san! 🌟</h3>
+                
+                <!-- Rena-san Image Container -->
+                <div class="rena-container">
+                    <!-- Rena-san image - will show when file exists -->
+                    <img src="images/rena-san.png" alt="Rena-san" class="rena-image">
+                    <!-- Placeholder - shows if image doesn't load -->
+                    <div class="rena-placeholder" id="renaPlaceholder">👧✨</div>
+                </div>
+                
+                <p>
+                    Our beloved event mascot, Rena-san, welcomes you to this year's Inquicon! 
+                    Designed with love in VRoid Studio, she embodies the spirit of anime culture and will be guiding you through all our exciting events!
+                </p>
+            </div>
+        </section>
+
+        <!-- Events Section -->
+        <h2 class="section-title">🎌 Events 🎌</h2>
+
+        <div class="events-grid">
+            <!-- Event 1: Karaoke -->
+            <div class="event-card music">
+                <div class="event-icon">🎤</div>
+                <h3 class="event-title">Karaoke</h3>
+                <p class="event-description">
+                    Witness official performances by Inquicon members, followed by an open stage! 
+                    Sing your heart out to your favorite anime openings and endings. Prizes await the best performers!
+                </p>
+                <a href="events/karaoke.html" class="event-link">View Details →</a>
+            </div>
+
+            <!-- Event 2: Chitrakatha -->
+            <div class="event-card art">
+                <div class="event-icon">📖</div>
+                <h3 class="event-title">Chitrakatha</h3>
+                <p class="event-description">
+                    Manga making competition! Create at least one chapter of your original manga. 
+                    Two categories: Best Art and Best Plot. Show us your storytelling prowess!
+                </p>
+                <a href="events/chitrakatha.html" class="event-link">View Details →</a>
+            </div>
+
+            <!-- Event 3: Anime CAPTCHA -->
+            <div class="event-card tech">
+                <div class="event-icon">🤖</div>
+                <h3 class="event-title">Anime CAPTCHA</h3>
+                <p class="event-description">
+                    Tech meets anime! Design an anime-themed CAPTCHA that stumps AI but is easy for humans. 
+                    Submit your website link. Top 3 innovative solutions win!
+                </p>
+                <a href="events/captcha.html" class="event-link">View Details →</a>
+            </div>
+
+            <!-- Event 4: Fanart Competition -->
+            <div class="event-card fanart">
+                <div class="event-icon">🎨</div>
+                <h3 class="event-title">Fanart Competition</h3>
+                <p class="event-description">
+                    Show your love for Rena-san! Submit your best fanart of our mascot. 
+                    Digital or traditional, let your creativity shine. Top 3 artists will be crowned!
+                </p>
+                <a href="events/fanart.html" class="event-link">View Details →</a>
+            </div>
+
+            <!-- Event 5: Pokemon PVP -->
+            <div class="event-card gaming">
+                <div class="event-icon">⚔️</div>
+                <h3 class="event-title">Pokemon PVP</h3>
+                <p class="event-description">
+                    Battle for glory on Pokemon Showdown! 
+                    Strategize, build your perfect team, and prove you're the ultimate Pokemon trainer!
+                </p>
+                <a href="events/pokemon.html" class="event-link">View Details →</a>
+            </div>
+
+            <!-- Event 6: Cosplay Competition -->
+            <div class="event-card cosplay">
+                <div class="event-icon">👘</div>
+                <h3 class="event-title">Cosplay Competition</h3>
+                <p class="event-description">
+                    Bring your favorite characters to life! Judges will select top 2 overall. 
+                    Plus, Mesmerizer Event: audience votes for best male and female cosplayers!
+                </p>
+                <a href="events/cosplay.html" class="event-link">View Details →</a>
+            </div>
+        </div>
+
+        <!-- Judges Section -->
+        <section class="judges-section">
+            <h2 class="judges-title">🌟 Our Esteemed Judges 🌟</h2>
+            
+            <div class="judges-grid">
+                <!-- Judge 1: Ms. Aparupa Nath -->
+                <div class="judge-card">
+                    <div class="judge-image-container">
+                        <img src="images/judge-aparupa-nath.jpg" alt="Ms. Aparupa Nath" class="judge-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="judge-placeholder" style="display: none;">👩‍🏫</div>
+                    </div>
+                    <h3 class="judge-name">Ms. Aparupa Nath</h3>
+                    <p class="judge-title-text">Judge</p>
+                </div>
+
+                <!-- Judge 2: Dr. Dwaipayan Roy -->
+                <div class="judge-card">
+                    <div class="judge-image-container">
+                        <img src="images/judge-dwaipayan-roy.jpg" alt="Dr. Dwaipayan Roy" class="judge-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="judge-placeholder" style="display: none;">👨‍🏫</div>
+                    </div>
+                    <h3 class="judge-name">Dr. Dwaipayan Roy</h3>
+                    <p class="judge-title-text">Judge</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Registration Section -->
+        <section class="registration-section">
+            <h2 class="registration-title">💰 Registration Fees 💰</h2>
+            
+            <div class="pricing-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Fee</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>IISER Kolkata Students</td>
+                            <td class="price">₹30</td>
+                        </tr>
+                        <tr>
+                            <td>Non-IISER Kolkata Participants</td>
+                            <td class="price">₹50</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="register-button-container">
+                <a href="https://www.inquivesta.in/events/registration/inquicon" class="register-button" target="_blank">🎯 Register Here 🎯</a>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>Inquicon × Inquivesta × IISER Kolkata</p>
+            <p>See you at the convention! 🎌✨</p>
+        </footer>
+    </div>
+
+    <script>
+        // Screen flash element for GBA effect
+        const screenFlash = document.createElement('div');
+        screenFlash.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; opacity: 0; pointer-events: none; z-index: 9999; transition: opacity 0.1s;';
+        document.body.appendChild(screenFlash);
+
+        function flashScreen() {
+            screenFlash.style.opacity = '0.3';
+            setTimeout(() => {
+                screenFlash.style.opacity = '0';
+            }, 80);
+        }
+
+        // Add interaction effects
+        document.querySelectorAll('.event-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                // Small flash on hover
+                screenFlash.style.opacity = '0.05';
+                setTimeout(() => {
+                    screenFlash.style.opacity = '0';
+                }, 50);
+
+                // Create sakura petal on hover
+                if (Math.random() > 0.5) {
+                    const petal = document.createElement('div');
+                    petal.style.cssText = `
+                        position: absolute;
+                        left: ${Math.random() * 80 + 10}%;
+                        top: ${Math.random() * 80 + 10}%;
+                        width: 22px;
+                        height: 26px;
+                        pointer-events: none;
+                        opacity: 0;
+                        transition: all 0.6s ease-out;
+                    `;
+                    
+                    const petalShape = document.createElement('div');
+                    petalShape.style.cssText = `
+                        width: 100%;
+                        height: 100%;
+                        background: linear-gradient(135deg, #ffb7d5 0%, #ffc8e3 30%, #ffe4f0 60%, #ffc8e3 90%);
+                        clip-path: path('M11,0 Q15.8,7 18,13 Q20.2,19 15.8,24.3 Q13,26 11,24.3 Q9,26 6.2,24.3 Q1.8,19 4,13 Q6.2,7 11,0 Z');
+                        box-shadow: 
+                            0 2px 6px rgba(255, 105, 180, 0.3),
+                            inset -1px -1px 3px rgba(255, 255, 255, 0.5),
+                            inset 1px 1px 3px rgba(255, 182, 213, 0.3);
+                        filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
+                    `;
+                    petal.appendChild(petalShape);
+                    this.appendChild(petal);
+                    
+                    setTimeout(() => {
+                        petal.style.opacity = '0.8';
+                        petal.style.transform = 'translateY(-30px) rotate(' + (Math.random() * 90 - 45) + 'deg)';
+                    }, 10);
+                    
+                    setTimeout(() => {
+                        petal.style.opacity = '0';
+                        setTimeout(() => petal.remove(), 600);
+                    }, 500);
+                }
+            });
+
+            card.addEventListener('click', function(e) {
+                if (!e.target.classList.contains('event-link')) {
+                    e.preventDefault();
+                    flashScreen();
+                    const link = this.querySelector('.event-link');
+                    if (link) {
+                        setTimeout(() => link.click(), 100);
+                    }
+                } else {
+                    flashScreen();
+                }
+            });
+        });
+
+        // Random floating sakura petals
+        function createFloatingElement() {
+            const petal = document.createElement('div');
+            const baseSize = Math.random() * 12 + 18; // 18-30px
+            const width = baseSize;
+            const height = baseSize * 1.2; // Petals are slightly taller
+            
+            petal.style.cssText = `
+                position: fixed;
+                left: ${Math.random() * 100}%;
+                top: 110%;
+                width: ${width}px;
+                height: ${height}px;
+                pointer-events: none;
+                z-index: 5;
+                opacity: 0.7;
+                transition: all 10s ease-out;
+            `;
+            
+            // Scale the path based on size
+            const scale = width / 25;
+            const petalShape = document.createElement('div');
+            petalShape.style.cssText = `
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(135deg, #ffb7d5 0%, #ffc8e3 30%, #ffe4f0 60%, #ffc8e3 90%);
+                clip-path: path('M${12.5*scale},0 Q${18*scale},${8*scale} ${20*scale},${15*scale} Q${22*scale},${22*scale} ${18*scale},${28*scale} Q${15*scale},${30*scale} ${12.5*scale},${28*scale} Q${10*scale},${30*scale} ${7*scale},${28*scale} Q${3*scale},${22*scale} ${5*scale},${15*scale} Q${7*scale},${8*scale} ${12.5*scale},0 Z');
+                box-shadow: 
+                    0 2px 6px rgba(255, 105, 180, 0.25),
+                    inset -1px -1px 3px rgba(255, 255, 255, 0.5),
+                    inset 1px 1px 3px rgba(255, 182, 213, 0.3);
+                filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
+            `;
+            petal.appendChild(petalShape);
+            document.body.appendChild(petal);
+            
+            const spinAmount = Math.random() * 1080 - 540; // -540 to 540 degrees
+            const drift = (Math.random() - 0.5) * 200; // Horizontal drift
+            
+            setTimeout(() => {
+                petal.style.top = '-15%';
+                petal.style.transform = `translateX(${drift}px) rotate(${spinAmount}deg)`;
+            }, 100);
+            
+            setTimeout(() => petal.remove(), 10000);
+        }
+
+        setInterval(createFloatingElement, 2500);
+
+        // Pixel pop effect on click anywhere
+        document.body.addEventListener('click', function(e) {
+            const colors = ['#ffb6c1', '#ff9ab4', '#c8b6ff', '#ffd1dc'];
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const pixel = document.createElement('div');
+                    pixel.style.cssText = `
+                        position: fixed;
+                        width: 8px;
+                        height: 8px;
+                        background: ${colors[Math.floor(Math.random() * colors.length)]};
+                        left: ${e.clientX}px;
+                        top: ${e.clientY}px;
+                        pointer-events: none;
+                        z-index: 1000;
+                        border-radius: 2px;
+                    `;
+                    document.body.appendChild(pixel);
+                    
+                    const angle = (Math.random() * 360) * Math.PI / 180;
+                    const distance = Math.random() * 50 + 30;
+                    const endX = e.clientX + Math.cos(angle) * distance;
+                    const endY = e.clientY + Math.sin(angle) * distance;
+                    
+                    pixel.style.transition = 'all 0.6s ease-out';
+                    setTimeout(() => {
+                        pixel.style.left = endX + 'px';
+                        pixel.style.top = endY + 'px';
+                        pixel.style.opacity = '0';
+                        pixel.style.transform = 'scale(0)';
+                    }, 10);
+                    
+                    setTimeout(() => pixel.remove(), 600);
+                }, i * 30);
+            }
+        });
+
+        // Instructions for replacing Rena image
+        // The image will automatically load if placed at: images/rena-san.png
+        // The placeholder will automatically hide when the image loads successfully
+
+        // Auto-hide placeholder when Rena image loads
+        const renaImage = document.querySelector('.rena-image');
+        const renaPlaceholder = document.getElementById('renaPlaceholder');
+        
+        if (renaImage && renaPlaceholder) {
+            renaImage.onload = function() {
+                renaPlaceholder.style.display = 'none';
+            };
+            
+            renaImage.onerror = function() {
+                // Image failed to load, keep showing placeholder
+                renaImage.style.display = 'none';
+            };
+        }
+    </script>
+</body>
+</html>
